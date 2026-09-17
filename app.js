@@ -1,11 +1,15 @@
 const express = require('express')
 const app = express()
 const { MongoClient } = require('mongodb')
+const path = require('path')
 require('dotenv').config()
 const uri = process.env.URI
 const client = new MongoClient(uri)
 const db = client.db(process.env.DB).collection(process.env.COLL)
 const contactsDAO = require('./contactsDAO')
+
+// Middleware
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.listen(3000, () => {
     console.log("Servidor rodando...")
